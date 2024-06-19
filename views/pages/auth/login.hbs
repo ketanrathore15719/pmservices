@@ -1,0 +1,25 @@
+<section class="auth">
+    <div class="wrapper">
+        <div class="logo">
+            <img src="/images/logo.jpg" alt="logo">
+        </div>
+        <div class="text-center mt-4 name">
+          Sign In
+        </div>
+        <form class="p-3 mt-3" method="post" >
+            <div class="form-field d-flex align-items-center">
+               	<i class='bx bxs-envelope bx-sm' ></i>
+                <input type="email" value="{{messages.email}}" name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <i class='bx bxs-key bx-sm'></i>
+                <input type="password" name="password" id="pwd" placeholder="Password">
+            </div>
+            <!-- <a class="form-field" href="/reset-password">Forgot password?</a> -->
+            <button class="btn mt-3">Login</button>
+        </form>
+        <div class="text-center fs-6">
+            <br> Don't have an account? <a href="/auth/register">Sign up</a>
+        </div>
+    </div>
+</section>

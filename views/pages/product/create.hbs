@@ -1,0 +1,154 @@
+<div>
+	<div class="flex">
+		<h3>Create Product</h3>
+		<a href="/product" class="btn btn-primary btn-lg" role="button" aria-pressed="true">View product</a>
+	</div>
+	<form id="product_form" method="post" enctype="multipart/form-data">
+		<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-9">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="mb-3">
+						            <label class="form-label">Select Category</label>
+						            <select class="form-control pt-2 pb-1" name="categoryId" id="category">
+						                <option value="">Please select anyone category</option>
+						                {{#each category}}
+						                <option value="{{_id}}">
+						                    {{name}}</option>
+						                {{/each}}
+						            </select>
+						        </div>
+						    </div>
+						    <div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="mb-3">
+						            <label class="form-label">Select Brand</label>
+						            <select class="form-control pt-2 pb-1" name="brandId" id="brand">
+						                <option value="">Please select anyone brand</option>
+						                {{#each brand}}
+						                <option value="{{_id}}">
+						                    {{name}}</option>
+						                {{/each}}
+						            </select>
+						        </div>
+						    </div>
+						    <div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="mb-3">
+						  			<label for="exampleFormControlInput1" class="form-label">Name</label>
+						  			<input type="text" id="productName" class="form-control" name="name">
+								</div>
+							</div>
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="mb-3 form-group">
+						  			<label for="exampleFormControlInput1" class="form-label">Price</label>
+						  			<input type="text" id="price" class="form-control" name="price">
+								</div>
+							</div>
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="mb-3">
+								  	<label for="exampleFormControlTextarea1" class="form-label">Description</label>
+								  	<textarea class="form-control"  name="description" rows="3">Test product</textarea>
+								</div>
+							</div>
+						</div>
+                    </div>
+					<div class="col-md-3" style="padding-top:30px">
+			            <img style="height: 170px;width: 170px;" id="image_preview"
+			                src="/images/prev.jpg">
+			            <div class="form-group mt-3">
+			                <input type="file" name="thumbnail" id="upload_file"
+			                    style="border: none;width:170px;">
+			            </div>
+			        </div>
+		        </div>
+		    </div>
+		</div>
+		<div class="form-group" style="padding-top: 10px;">
+			<button class="btn btn-primary form-control" type="submit">Submit</button>
+		</div>
+	</form>
+</div>
+<style type="text/css">
+	#upload_file {
+		font-size: 10px;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+		//validate form
+		$('form#product_form').validate({
+			errorClass: "state-error",
+			validClass: "state-success",
+			rules: {
+				categoryId:{
+					required: true,
+				},
+				brandId:{
+					required: true,
+				},
+				name: {
+					required: true,
+				},
+				thumbnail : {
+					required: true,
+				},
+				price: {
+                    required: true,
+                    number: true,
+                }
+			},
+			messages: {
+				categoryId: {
+					required: 'Please select anyone category!',
+				},
+				brandId: {
+					required: 'Please select anyone brand!',
+				},
+				name: {
+					required: 'Please enter product name!',
+				},
+				thumbnail: {
+					required: 'Please upload a one file!',
+				},
+				price: {
+                    required: 'Please enter product price',
+                    number: 'Please enter only digits',
+                }
+			},
+			highlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').addClass(errorClass).removeClass(validClass);
+			},
+			unhighlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').removeClass(errorClass).addClass(validClass);
+			},
+			errorPlacement: function (error, element) {
+				if ($(element).attr('type') == 'checkbox') {
+					error.insertAfter(element.parent());
+				} else {
+					error.insertAfter(element);
+				}
+			}
+		});
+
+
+	});
+
+    var imgInp = document.getElementById("upload_file")
+    var image_preview = document.getElementById("image_preview")
+    imgInp.onchange = evt => {
+		  const [file] = imgInp.files
+		  if (file) {
+		    image_preview.src = URL.createObjectURL(file)
+		  }
+		}
+
+	
+
+
+	$('#productName').on('input', async function(e){
+    	let body = {name:this.value}
+    	$.post( '/product/verify',body, ( data ) => data.success ? $.notify("Product name verified!", "success") : $.notify("Product already exists!"), "json");
+	});
+	
+</script>

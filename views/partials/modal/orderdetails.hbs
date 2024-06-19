@@ -1,0 +1,108 @@
+<div id="{{invoiceId}}"  class="modal orderdetails-modal">
+    <div class="modal-content">
+        <div class="modal-header flex">
+            <div>
+              <h5 class="modal-title">Order Details</h5>
+
+              <p style="padding-top: 5px;">Order Date : {{dateAndTime createdAt}}</p>
+            </div>
+            <p onclick="document.getElementById('{{invoiceId}}').style.display='none'" style="cursor:pointer; font-size: 25px" class="button display-topright">&times;</p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+               <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Invoice ID :</label>
+                        <strong id="brandinfo">{{invoiceId}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Order Date :</label>
+                        <strong id="brandinfo">{{dateAndTime createdAt}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label"> Total Price :</label>
+                        <strong id="brandinfo">₹.{{this.totalPrice}}.00</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Payment Mode:</label>
+                        <strong id="brandinfo">{{paymentMode}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Payment Status:</label>
+                        <strong id="brandinfo">{{#if isStatus}} paid {{else}} unpaid {{/if}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Delivery Status:</label>
+                        <strong id="brandinfo"> {{deliveryStatus}} at {{dateAndTime updatedAt}}</strong>
+                    </div>
+                    <div class="deliveryInfo">
+                        
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Delivery:</label>
+                        <strong id="brandinfo">{{#if isDelivered}} delivered {{else}} processing {{/if}}</strong>
+                    </div>
+                </div>
+                <hr>
+                <div style="padding-top:10px;">
+                    <h5>Delivery Address</h5>
+                    <address>
+                      {{address}}, {{address1}}, {{city}} - {{pincode}},
+                      Mo:- {{mobile}}
+                    </address>
+                </div>
+                <hr>
+                <div style="padding-top:10px;">
+                      <h5>Item Details</h5>
+                      <div class="flex">
+                          <div style="width:30%">
+                              <hr>
+                              {{#each this.orderInfo}}
+                              <div style="height:100px">
+                                  <div class="mt-2">
+                                      <span>price: </span><strong>₹.{{this.price}}.00</strong>
+                                  </div>
+                                  <div class="mt-2">
+                                      <span>Quantity: </span><strong>{{this.qty}}</strong>
+                                  </div>
+                              </div>
+                              <hr>
+                              {{/each}}
+                          </div>
+                          <br>
+                          <div style="width:70%">
+                              <hr>
+                              {{#each this.productInfo}}
+                              <div style="height:100px">
+                                  <div class="mt-2">
+                                      <img src="{{this.thumbnail.url}}" style="object-fit: cover; max-height: 50px;">
+                                      <a href="#" style="text-decoration: none; color:#333;"><strong>{{this.name}}</strong></a>
+                                  </div>
+                              </div>
+                              <hr>
+                              {{/each}}
+                          </div>
+                      </div>
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer flex"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+   
+</script>

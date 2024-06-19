@@ -1,0 +1,142 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+	<div class="container-fluid">
+		<a class="navbar-brand name" href="/">Favy.com</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	 		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+			{{#if user }}
+				{{#compare user.role '=='  1}}
+					<ul id="myDIV" class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li id="routes" class="nav-item"></li>
+						<li class="nav-item"><a class="nav-link" href="/admin/orders">Orders</a></li>
+					</ul>
+				{{/compare}}
+				
+				{{#compare user.role '=='  2}}
+					<ul id="myDIV" class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li>
+							<a class="nav-link" href="/">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/all/product">All</a>
+						</li>
+						{{#each category}} 
+							<li class="nav-item">
+								<a class="nav-link ajaxCall" href="/product/{{#tolowercase name}}{{/tolowercase}}/{{_id}}">{{name}}</a>
+							</li>
+						{{/each}}
+					  	
+					</ul>
+				{{/compare}}
+
+			{{else}}
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/all/product">All</a>
+					</li>
+					{{#each category}} 
+						<li class="nav-item">
+							<a  class="nav-link ajaxCall" href="/product/{{#tolowercase name}}{{/tolowercase}}/{{_id}}">{{name}}</a>
+						</li>
+					{{/each}}
+				  	
+				</ul>
+			{{/if}}
+
+	      	<!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	        	<li class="nav-item">
+	          		<a class="nav-link" aria-current="page" href="#">About</a>
+	        	</li>
+	        	<li class="nav-item">
+	          		<a class="nav-link" href="#">Categories</a>
+	        	</li>
+	         	<li class="nav-item">
+	          		<a class="nav-link" href="#">Blog</a>
+	        	</li>
+	        	<li class="nav-item">
+	          		<a class="nav-link" href="#">Contact</a>
+	        	</li>
+	      	</ul> -->
+
+  			<form class="d-flex  searchitem">
+  				{{#if categorylist}}
+  					<select class="form-control pt-2 pb-2" id="category_type" name="category_type">
+                       	<option value="">Select anyone category</option>
+                       	<option value="">All category</option>
+		                {{#each categorylist}}
+		                <option value="{{_id}}" {{#compare ../category_type '=='  _id}}selected{{/compare}}>
+		                    {{name}}</option>
+		                {{/each}}
+                    </select>
+  				{{/if}}
+  				&nbsp;
+  				{{#if brand}}
+  					<select class="form-control me-2" id="brand_type" name="brand_type">
+                       	<option value="">Select anyone brand</option>
+                       	<option value="">All brand</option>
+		                {{#each brand}}
+		                <option value="{{_id}}" {{#compare ../brand_type '=='  _id}}selected{{/compare}}>
+		                    {{name}}</option>
+		                {{/each}}
+                    </select>
+  				{{/if}}
+                &nbsp;
+    			<input class="form-control me-2 searchfnc" id="inputSearch" type="search" name="search" placeholder="Search" aria-label="Search">
+    			<i class="fa fa-search"></i>
+  			</form>
+  			<ul>
+  				<li style="float:right" style="display: inline;">
+			  		{{#if user}}
+			  			<!-- <a  class="nav1" style="display: inline;" href="/auth/logout"> <i class='bx bx-log-out bx-sm'></i></a> -->
+
+			  			<a  class="nav1" style="display: inline;" href="/cart"> <span class="cartnumber" style="
+				         border-radius: 10%;
+
+				         max-width: 5px;
+				         position:relative; 
+				         bottom:12px; 
+				         left:35px; 
+				         font-size: 12px;
+				         z-index:1;"></span><i class='bx bx-cart bx-sm'></i></a>
+         			
+			  		{{else}}
+			  			<a  class="nav1" href="/auth/login"><i class='bx bx-log-in bx-sm' ></i></a>
+			  		{{/if}}
+			  	</li>
+  			</ul>
+		</div>
+		{{#if user}}
+		{{> common/profilemenu}}
+		{{/if}}
+	</div>
+</nav>
+<script type="text/javascript">
+
+$('#inputSearch').on('input', function(e){
+    	
+    	let pageUrl = `${window.location.pathname}?search=${this.value}`;
+    	
+    	$.ajax({
+            url: pageUrl,
+            dataType: "html",
+            success: function (response) {
+                $(".bodyDiv").html(response);
+                history.pushState({}, '', pageUrl);
+                
+            },
+            error: function (xhr, status, error) {
+                toastr["error"](error, "error", {
+                    "closeButton": true,
+                    "progressBar": true
+                });
+            }
+        });
+ 
+	});
+
+</script>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+{{> common/head}}
+<body>
+	<div class="cui-initial-loading"></div>
+	{{#if flash.message}}
+  	{{{flashMe flash}}}
+  	{{/if}}
+  	{{> header/navheader}}
+  	
+  	<div style="margin: 30px;" class="bodyDiv">
+  		{{{body}}}
+  	</div>
+  	{{> common/script}}
+</body>
+</html>

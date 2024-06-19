@@ -1,0 +1,192 @@
+/* Importing fonts from Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+    /* ===== Colors ===== */
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #333333;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.5s ease;
+}
+/* Reseting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #ecf0f3;
+}
+
+.wrapper {
+    max-width: 450px;
+    min-height: 500px;
+    margin: 80px auto;
+    padding: 40px 30px 30px 30px;
+    background-color: #FFF;
+    border-radius: 15px;
+    box-shadow: 8px 8px 35px 10px #a7aaa7;
+}
+
+.logo {
+    width: 120px;
+    margin: auto;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+  /*  object-fit: cover;*/
+    border-radius: 10%;
+    /*box-shadow:8px 8px 15px 2px #a7aaa7;*/
+}
+
+.wrapper .name {
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 1.3px;
+    padding-left: 10px;
+    color: #555;
+}
+
+.wrapper input {
+    width: 100%;
+    display: block;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 10px 15px 10px 10px;
+    /* border: 1px solid red; */
+}
+
+.wrapper  {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.state-error input,
+.state-error textarea,
+.state-error select {
+      border-color: #ff0000c4 !important;
+}
+
+label.state-error {
+  display: block;
+  color: #ff0000c4 !important;
+  font-size: 14px !important;
+}
+.state-error i {
+    color: #ff0000c4;
+}
+
+/*.wrapper .btn {
+    box-shadow: none;
+    width: 100%;
+    height: 40px;
+    background-color: #096bc6;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #b1b1b1,
+        -3px -3px 3px #fff;
+    letter-spacing: 1.3px;
+}*/
+
+.wrapper .btn {
+    border: 2px solid #333333;
+    background-color: #fff;
+    box-shadow: none;
+    width: 100%;
+    height: 40px;
+    border-radius: 25px;
+    color: #333333;
+    letter-spacing: 1.5px;
+    transition: all 0.5s ease;
+}
+.wrapper .btn:hover {
+
+    background-color: #333333;
+    color: #fff;
+}
+
+.wrapper a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: black;
+}
+
+.wrapper a:hover {
+    color: #333333;
+}
+
+.error-msg {
+    padding-left: 10px;
+    color: red;
+}
+.success-msg {
+    padding-left: 10px;
+    color: green;
+}
+
+.auth{
+    position: absolute;
+    top: 0;
+    top: 0;
+    height: 100vh;
+    width: calc(100% - 0px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+.auth .text{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 12px 60px;
+}
+
+
+/*@media(max-width: 420px) {
+    
+    
+}*/
+@media only screen and (max-width: 420px) {
+    .wrapper {
+        max-width: 800px;
+        height: 100vh;
+        margin: 0px auto;
+        border-radius: 0px;
+        padding: 120px 15px 15px 15px;
+    }
+
+    .wrapper .name {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .wrapper  input {
+        font-size: 1.1rem;
+    }
+
+    .wrapper  i {
+        font-size: 1.1rem;
+    }
+}
+
+.countdown {
+    font-size: 13px;
+}
+.otp {
+    pointer-events: none;
+}

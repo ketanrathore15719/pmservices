@@ -1,0 +1,88 @@
+<div class="container mt-20" style="position:relative;">
+	<center>
+	<!-- <form id="product_form" method="get" style="padding-top: 20px; padding-left: 10px;">
+		<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3 mt-10">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						            <input type="text" name="search" class="form-control" value="{{search}}"
+                        			placeholder="Search by name">
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="col-md-3 mt-10">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						           	<select class="form-control pt-2 pb-2" id="brand_type" name="brand_type">
+				                       	<option value="">Please select anyone brand</option>
+				                       	<option value="">All brand</option>
+						                {{#each brand}}
+						                <option value="{{_id}}" {{#compare ../brand_type '=='  _id}}selected{{/compare}}>
+						                    {{name}}</option>
+						                {{/each}}
+				                    </select>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="col-md-3 mt-10">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						           	<button type="submit" class="btn btn-info "><i
+                            				class="fa fa-search" data-toggle="tooltip" data-placement="top" title=""
+                            				data-original-title="Search"></i> Search</button>
+                            		<a href="#" onclick="clearUrl()" class="btn btn-info btn-block"
+                        				data-toggle="tooltip" data-placement="top" title=""
+                        				data-original-title="Clear">Clear</a>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+		        </div>
+		    </div>
+		</div>
+	</form> -->
+	</center>
+	
+	<div class="container d-flex justify-content-center mt-50 mb-50">
+	    <div class="row">
+	    	{{#if product}}
+		    	{{#each product}}
+		    		<div class="col-md-4 mt-2">
+			            <div class="card">
+			                <div class="card-body">
+			                   	<div class="card-img-actions">
+			                       	<img src="{{thumbnail.url}}" class="card-img img-fluid" onclick="productdetails('{{#stringToDashParams name}}{{/stringToDashParams}}','{{_id}}')" width="96" height="350" alt="">
+			                    </div>
+			                </div>
+							<div class="card-body bg-light text-center">
+			                    <div class="mb-2">
+			                        <h6 class="font-weight-semibold mb-2">
+			                            <a href="/product/details/{{#stringToDashParams name}}{{/stringToDashParams}}/{{_id}}" class="text-default mb-2" data-abc="true" >{{name}}</a>
+			                        </h6>
+
+			                        <p class="text-muted" data-abc="true">{{brand_info.name}}</p>
+			                    </div>
+
+			                    <h3 class="mb-0 font-weight-semibold">₹.{{price}}.00</h3>
+
+			                   	<button type="button" class="btn bg-cart mt-3" onclick="addToCart('{{_id}}','{{price}}')"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>         
+			                            
+			                </div>
+			            </div>
+					</div> 
+		    	{{/each}}
+	    	{{else}}
+	    		<p>Product not found</p>
+	    	{{/if}}
+		</div>
+	</div>
+</div>
+
+{{setCss 'top' '/css/product.css'}}

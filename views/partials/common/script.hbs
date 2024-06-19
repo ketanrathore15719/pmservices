@@ -1,0 +1,237 @@
+<script type="text/javascript">
+	var element = document.getElementsByClassName("navbar-nav")[0];
+		element.addEventListener("click", myFunction);
+
+	function myFunction(e) {
+		var elems = document.querySelector(".active");
+		if(elems !=null) {
+				elems.classList.remove("active");
+		}
+		e.target.className = "active";
+	}
+
+	let routes = [{
+		name:'Home',
+		url:'/'
+	},{
+		name:'Category',
+		url:'/category'
+	},{
+		name:'Brand',
+		url:'/brand'
+	},{
+		name:'Product',
+		url:'/product'
+	}]
+
+	routes.forEach(myFunction)
+	let text = routes.toString().replaceAll(',','');
+
+	document.getElementById("routes").innerHTML = text;
+
+	function myFunction(item, index, arr) {
+		/*`<li class=nav-item ${window.location.pathname === item.url ? 'active' : ''}>
+	  					<a href=${item.url}>${item.name}</a>
+	  				  </li>`*/
+	  	arr[index] = `<li class="nav-item">
+	  					<a class="nav-link ajaxCall" href=${item.url}>${item.name}</a>
+	  				  </li>`;
+	}
+
+</script>
+<script type="text/javascript">
+
+	const show = id => {
+		
+		//$('#'+id).modal('show')
+		// let url = '/admin/order/view/' + id;
+		document.querySelector('#'+id).style.display='block'
+		
+
+		//$(`#${id}1`).toggle()
+
+	};
+
+	const backToLogin = () => {
+		window.location.href = '/auth/login'
+	}
+	
+	const productdetails = (name, id) => {
+		window.location.href = '/product/details/'+name+'/'+id
+	}
+
+	$.post( '/cart',{type:'api'}, ( data ) => {
+		if(data.success) {
+			let cart = document.querySelector('.cartnumber').innerHTML
+			document.querySelector('.cartnumber').innerHTML = Number(cart) + data.cartnumber
+		}
+	}, "json");
+
+	const addToCart = (productId, price) => {
+		let user = '{{user}}' && {{{json user}}}
+		console.log(user)
+		if(!user) {
+			backToLogin()
+		} else {
+
+			let body = {productId, price, qty:1}
+			$.post( '/cart/create',body, ( data ) => {
+
+				if(data.success) {
+					$.notify("Product added to cart", "success")
+					let cart = document.querySelector('.cartnumber').innerHTML
+					document.querySelector('.cartnumber').innerHTML = Number(cart) + 1
+				}
+			}, "json");
+			
+			//alert('product added to cart')
+		}
+	}
+
+	localStorage.setItem('url',window.location.pathname)
+	const clearUrl = () => window.location.href = localStorage.getItem('url')
+	
+	console.log($('#brand_type').find(":selected").text())
+
+	$("#brand_type").change(function () { 
+		
+		let category_type = $('#category_type').find(":selected").val() ? `category_type=${$('#category_type').find(":selected").val()}&` : ''
+		
+		let pageUrl = `${window.location.pathname}?${category_type}brand_type=${this.value}`
+		$.ajax({
+            url: pageUrl,
+            dataType: "html",
+            success: function (response) {
+                $(".bodyDiv").html(response);
+                history.pushState({}, '', pageUrl);
+                
+            },
+            error: function (xhr, status, error) {
+                toastr["error"](error, "error", {
+                    "closeButton": true,
+                    "progressBar": true
+                });
+            }
+        });
+	});
+
+
+	$("#category_type").change(function () { 
+		let brand_type = $('#brand_type').find(":selected").val() && `&brand_type=${$('#brand_type').find(":selected").val()}`
+
+		let pageUrl = `${window.location.pathname}?category_type=${this.value}${brand_type}`
+		$.ajax({
+            url: pageUrl,
+            dataType: "html",
+            success: function (response) {
+                $(".bodyDiv").html(response);
+                history.pushState({}, '', pageUrl);
+                
+            },
+            error: function (xhr, status, error) {
+                toastr["error"](error, "error", {
+                    "closeButton": true,
+                    "progressBar": true
+                });
+            }
+        });
+	});
+
+	// let selectBarand = document.querySelector('#selectBarand')
+	// let selectedBrand = document.querySelector('#brand_type')
+	// console.log(selectedBrand)
+	// selectedBrand.innerHTML = selectedBrand
+
+	// selectBarand.parentNode.replaceChild(selectedBrand, selectBarand);
+</script>
+
+<script type="text/javascript">
+
+	$(document).off('click', ".ajaxCall").on('click', ".ajaxCall", function () {
+        const clickedElement = $(this)
+        const pageUrl = clickedElement.data("href")
+
+        $.ajax({
+            url: pageUrl,
+            dataType: "html",
+            success: function (response) {
+                $(".bodyDiv").html(response);
+                history.pushState({}, '', pageUrl);
+                
+            },
+            error: function (xhr, status, error) {
+                toastr["error"](error, "error", {
+                    "closeButton": true,
+                    "progressBar": true
+                });
+            }
+        });
+    })
+
+    
+
+    $(document).off('click', ".ajaxCallremove").on('click', ".ajaxCallremove", function () {
+        const clickedElement = $(this)
+        const pageUrl = clickedElement.data("href")
+
+        const result = confirm("Are you sure you want to remove it!");
+        if(result) {
+
+	        $.ajax({
+	            url: pageUrl,
+	            dataType: "html",
+	            success: function (response) {
+	            	
+	                $(".bodyDiv").html(response);
+	                //history.pushState({}, '', pageUrl);
+	                let cart = document.querySelector('.cartnumber').innerHTML
+					document.querySelector('.cartnumber').innerHTML = Number(cart) - 1
+	            },
+	            error: function (xhr, status, error) {
+	                toastr["error"](error, "error", {
+	                    "closeButton": true,
+	                    "progressBar": true
+	                });
+	            }
+	        });
+	    }
+    })
+
+
+    const deliveryStatusU = (e, invoiceId) => {
+		let deliveryStatus = e.value;
+
+		$.ajax({
+            dataType: "json",
+            method:'POST',
+            data:{invoiceId, deliveryStatus},
+            success: function (response) {
+            	console.log(response.success)
+            	if(response.success) {
+            		$.notify("Delivery status updated", "success") 
+            		$.ajax({
+			            dataType: "html",
+			            success: function (response) {
+			                $(".bodyDiv").html(response);     
+			            },
+			            error: function (xhr, status, error) {
+			                toastr["error"](error, "error", {
+			                    "closeButton": true,
+			                    "progressBar": true
+			                });
+			            }
+			        });
+            	} else {
+            		$.notify("error while updating status!", "error") 
+            	}
+                
+            },
+            error: function (xhr, status, error) {
+                toastr["error"](error, "error", {
+                    "closeButton": true,
+                    "progressBar": true
+                });
+            }
+        });
+	}
+</script>

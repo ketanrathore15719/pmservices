@@ -1,0 +1,100 @@
+<div>
+	<div style="padding-top: 20px;" class="productList">
+		<table class="table" style="width:100%; padding: 20;">
+		  	<thead>
+		    	<tr>
+		    		<th scope="col" style="width:20%">INV-ID</th>
+		     	 	<th scope="col" style="width:15%">Name</th>
+		     	 	<th scope="col" style="width:15%">Mobile</th>
+		      		<th scope="col" style="width:25%">Email</th>
+		      		<th scope="col" style="width:15%">Delivery Status</th>
+		     	 	<th scope="col">Action</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody>
+		  		{{#if invoice}}
+		  			{{#each invoice}}
+			  			<tr>
+			  				<td>{{invoiceId}}</td>
+			      			<td>{{name}}</td>
+			      			<td>{{mobile}}</td>
+			      			<td><a href="mailto:{{email}}">{{email}}</a></td>
+			      			<td>
+			      				<div class="form-group">
+						            <select onchange="deliveryStatusU(this, '{{_id}}')" class="form-control pt-2 pb-1 deliveryStatusUpdate" name="deliveryStatus" data-id="{{_id}}" id="deliveryStatusUpdate">
+						                <option value="">change delivery status</option>
+						                <option value="{{deliveryStatus}}" selected>{{deliveryStatus}}</option>
+						                <option value="Order Confirm">Order Confirm</option>
+						                <option value="Order Prepared">Order Prepared</option>
+						                <option value="Order Dispatched">Order Dispatched</option>
+						                <option value="Order Near by you">Order Near by you</option>
+						                <option value="Order Delivered">Order Delivered</option>
+						            </select>
+						        </div>
+			      			</td>
+			      			<td>
+			      				<i style="cursor:pointer;" onclick="show('{{invoiceId}}')" class="bx bx-show bx-sm"></i>
+			      				
+			      				{{> modal/orderdetails}}
+			      			</td>
+			    		</tr>
+
+			    			<div id="{{invoiceId}}1" style="display:none;">
+		                        <h5>Item Details</h5>
+                               	<div class="flex">
+                               		<div style="width:30%">
+                               			<hr>
+                               			{{#each this.orderInfo}}
+                               			<div style="height:100px">
+                               				<div class="mt-2">
+                               		 			<span>price: </span><strong>₹.{{this.price}}.00</strong>
+                            				</div>
+                            				<div class="mt-2">
+                               		 			<span>Quantity: </span><strong>{{this.qty}}</strong>
+                            				</div>
+                               			</div>
+                               			<hr>
+                               			{{/each}}
+                               		</div>
+                               		<br>
+                               		<div style="width:70%">
+                           				<hr>
+	                               		{{#each this.productInfo}}
+                               			<div style="height:100px">
+                               				<div class="mt-2">
+				                                <img src="{{this.thumbnail.url}}" style="object-fit: cover; max-height: 100px;">
+				                                <a href="#" style="text-decoration: none; color:#333;"><strong>{{this.name}}</strong></a>
+				                            </div>
+                               			</div>
+                               			<hr>
+                               			{{/each}}
+                               		</div>
+                               	</div>
+                           	</div>
+			    		</tr>
+			    	{{/each}}
+		  		{{/if}}
+		  		{{#if totalProduct}}
+		  			<tr>
+		  				<td></td>
+		  			</tr>
+		  			<tr>
+		  				<td>No Records found</td>
+		  			</tr>
+		  		{{/if}}
+		  	</tbody>
+		</table>
+		<div class="flex">
+			{{#if product}}
+            	<span class="text-left text-muted mt-2">Display {{start_record}} to {{end_record}}
+                records out of
+                {{total_records}}</span>
+        	{{/if}}
+			{{#if pagination.totalPage}}
+				<center>
+	        		{{pagination pagination}}
+				</center>
+    		{{/if}}
+		</div>
+	</div>
+</div>

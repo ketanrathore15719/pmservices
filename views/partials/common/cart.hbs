@@ -1,0 +1,138 @@
+{{#each cart}}
+    <div class="cart">
+        <div class="cart-body">
+            <div class="cart-items">
+                <div class="mt-2">
+                    <img src="{{product_info.thumbnail.url}}" width="100">
+                </div>
+                <div class="items-cart">
+                    <div class="mt-2">
+                        <strong>{{product_info.name}}</strong>
+                    </div>
+                    <div class="mt-2">
+                        Qty : {{qty}}
+                    </div>
+                    <div class="mt-2">
+                        Price : ₹.{{product_info.price}}.00
+                    </div>
+                </div>
+                <div>
+                    <a style="display:flex;" class="ajaxCallremove" data-href="/cart/remove/{{_id}}/{{userId}}"><i class='bx bx-x bx-sm'></i></a>
+                </div>
+            </div>
+            <div class="col-12">
+               <div class="justify-content-between">
+                  <div class="input-group w-auto justify-content-end align-items-center">
+                     <input type="button" value="-" class="button-minus border rounded-circle  icon-shape icon-sm mx-1 " data-field="qty" data-value="{{_id}}" data-price="{{product_info.price}}">
+                     <input type="number" disabled style="background:transparent;" step="1" max="10" value="{{qty}}" name="qty" class="quantity-field border-0 text-center w-25">
+                     <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="qty" data-value="{{_id}}" data-price="{{product_info.price}}">
+                  </div>
+               </div>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function incrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            let cartId = $(e.target).data('value')
+            let price = $(e.target).data('price')
+
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal)) {
+                parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+                $.ajax({
+                    url: '/cart/update',
+                    dataType: "html",
+                    method:'POST',
+                    data:{cartId, price, qty:currentVal + 1 },
+                    success: function (response) {
+                        $.ajax({
+                            dataType: "html",
+                            success: function (response) {
+                                
+                                $(".bodyDiv").html(response);
+                            },
+                            error: function (xhr, status, error) {
+                                toastr["error"](error, "error", {
+                                    "closeButton": true,
+                                    "progressBar": true
+                                });
+                            }
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        toastr["error"](error, "error", {
+                            "closeButton": true,
+                            "progressBar": true
+                        });
+                    }
+                });
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        function decrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            let cartId = $(e.target).data('value')
+            let price = $(e.target).data('price')
+
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal) && currentVal > 0) {
+
+                parent.find('input[name=' + fieldName + ']').val(currentVal == 1 ? currentVal : currentVal - 1);
+
+                $.ajax({
+                    url: '/cart/update',
+                    dataType: "html",
+                    method:'POST',
+                    data:{cartId, price, qty:currentVal == 1 ? currentVal : currentVal - 1},
+                    success: function (response) {
+                        $.ajax({
+                            dataType: "html",
+                            success: function (response) {
+                                
+                                $(".bodyDiv").html(response);
+                            },
+                            error: function (xhr, status, error) {
+                                toastr["error"](error, "error", {
+                                    "closeButton": true,
+                                    "progressBar": true
+                                });
+                            }
+                        });
+
+                        //$(".bodyDiv").html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr["error"](error, "error", {
+                            "closeButton": true,
+                            "progressBar": true
+                        });
+                    }
+                });
+
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        $('.input-group').on('click', '.button-plus', function(e) {
+            incrementValue(e);
+        });
+
+        $('.input-group').on('click', '.button-minus', function(e) {
+            decrementValue(e);
+        });
+    });
+
+</script>

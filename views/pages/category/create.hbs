@@ -1,0 +1,64 @@
+<div>
+	<div class="flex">
+		<h3>Create Category</h3>
+		<a href="/category" class="btn btn-primary btn-lg" role="button" aria-pressed="true">View category</a>
+	</div>
+	<form id="category_form" method="post">
+		<div class="mb-3 form-group">
+  			<label for="exampleFormControlInput1" class="form-label">Name</label>
+  			<input type="text" id="categoryName" class="form-control" name="name">
+		</div>
+		<div class="mb-3">
+		  	<label for="exampleFormControlTextarea1" class="form-label">Description</label>
+		  	<textarea class="form-control"  name="description" rows="3"></textarea>
+		</div>
+		<div class="form-group" style="padding-top: 10px;">
+			<button class="btn btn-primary form-control" type="submit">Submit</button>
+		</div>
+	</form>
+</div>
+<script>
+	$(document).ready(function () {
+		//validate form
+		$('form#category_form').validate({
+			errorClass: "state-error",
+			validClass: "state-success",
+			rules: {
+				name: {
+					required: true,
+				},
+			},
+			messages: {
+				name: {
+					required: 'Please enter category name!',
+				},
+			},
+			highlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').addClass(errorClass).removeClass(validClass);
+			},
+			unhighlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').removeClass(errorClass).addClass(validClass);
+			},
+			errorPlacement: function (error, element) {
+				if ($(element).attr('type') == 'checkbox') {
+					error.insertAfter(element.parent());
+				} else {
+					error.insertAfter(element);
+				}
+			}
+		});
+	});
+
+	$('#categoryName').on('input', async function(e){
+    	let body = {name:this.value}
+    	$.post( '/category/verify',body, ( data ) => data.success ? $.notify("Category name verified!", "success") :$.notify("Category already exists!"), "json");
+	});
+	
+</script>
+
+<!-- $.post( '/category/verify',body, function( data ) {
+		  if(!data.success) {
+		  	$.notify("Category already exists!");
+		  	//window.location.reload()
+		  }
+		}, "json"); -->

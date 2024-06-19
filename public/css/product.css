@@ -1,0 +1,150 @@
+
+.mt-50{
+
+    margin-top: 50px;
+}
+
+.mb-50{
+
+    margin-bottom: 50px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    /*border: 1px solid rgba(0,0,0,.125);*/
+    border-radius: .1975rem;
+    box-shadow: 0px 0px 8px 2px #a7aaa7;
+}
+
+.card-img-actions {
+    position: relative;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.card-img{
+    object-fit: scale-down;
+    max-width: 450px;
+    max-height: 200px;
+}
+
+.star{
+        color: red;
+}
+
+.bg-cart {
+    border: 2px solid #333333;
+    background-color: #fff;
+    box-shadow: none;
+    width: auto;
+    height: 40px;
+    border-radius: 25px;
+    color: #333333;
+    transition: all 0.5s ease;
+}
+
+.bg-cart:hover {
+    border: 2px solid #333333;
+    background-color: #333333;
+    color: #fff;
+}
+
+.bg-buy {
+    background-color:green;
+    color:#fff;
+    padding-right: 29px;
+}
+.bg-buy:hover {
+    
+    color:#fff;
+}
+
+a{
+
+    text-decoration: none !important;
+}
+
+.container-main {
+   display: table;
+   width: 100%;
+}
+.left-half {
+  position: absolute;
+  left: 10px;
+  width: 60%;
+}
+
+.right-half {
+  position: absolute;
+  right: 0px;
+  width: 36%;
+}
+
+.cart {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 100%;
+    word-wrap: break-word;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .1975rem;
+}
+
+.cart-img-actions {
+    position: relative;
+}
+.cart-body { 
+    padding: 1.25rem;
+}
+
+.cart-img{
+    object-fit: scale-down;
+    max-width: 450px;
+    max-height: 200px;
+}
+
+.cart-items {
+   display: flex; 
+   justify-content: space-between;
+}
+
+.items-cart {
+    padding-left: 20px;
+    width: 100%;
+}
+
+@media(max-width: 770px) {
+    .cart-items {
+        left: 0;
+        display: block; 
+    }
+    .left-half {
+        width: 100%;
+        position: relative;
+    }
+    .right-half {
+        padding-top: 10px;
+        left: 10px;
+        width: 100%;
+        position: relative;
+    }
+}

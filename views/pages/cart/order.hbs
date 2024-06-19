@@ -1,0 +1,111 @@
+<div id="product_details" class="">
+    <form action="/cart/order/confirm" method="POST">
+        <div class="col-md-8 mt-2 container-main">
+            <div class="left-half">
+                <div>
+                    <h4><strong>Product Details</strong></h4>
+                    {{#if cart}}
+                        {{> common/cart}}
+                    {{/if}}
+                </div>
+                <div style="padding-top: 20px;">
+                    <h4><strong>Delivery Address</strong></h4>
+                    <div >
+                        {{#if address}}
+                        <div style="height: 600px; " class="scrollbar1" id="style-4">
+                            {{#each address}}
+                            <div class="flex-col mb-4 cart" style="padding: 20px;">
+                                <label class="inline-flex items-center mt-3">
+                                    <input type="radio" class="addressType" id="addressType" name="addressType" {{#if isDefault}} checked {{/if}} class=" form-radio h-5 w-5 text-gray-600 mb-4" value="{{_id}}">
+                                    <span class="ml-2 text-gray-700 mb-4">{{#if isDefault}} Default deliver to this address {{else}}Deliver to this address{{/if}}</span>
+                                    <p style="padding-left: 20px;">{{address}}, {{address1}}
+                                    {{city}} - {{pincode}}</p>
+                                </label>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                         <div class="flex-col mb-4">
+                            <label class="inline-flex items-center mt-3">
+                                <input type="radio" id="addressNew" name="addressType" class=" form-radio h-5 w-5 text-gray-600 mb-4" value="new">
+                                <span class="ml-2 text-gray-700 mb-4">Add new address</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="cart" id="addressForm">
+                        <div class="cart-body">
+                            <div class="cart-item form-group">
+                                 <div class="mt-2">
+                                   <input type="text" name="mobile" class="form-control" placeholder="Enter your mobile number">
+                                </div>
+                                <div class="mt-2">
+                                   <input type="text" name="address" class="form-control" placeholder="Enter your delivery address">
+                                </div>
+                                <div class="mt-2">
+                                   <input type="text" name="address1" class="form-control" placeholder="Enter your delivery area / Colony / road name">
+                                </div>
+                                <div class="mt-2">
+                                   <input type="text" name="city" class="form-control" placeholder="Enter your delivery city">
+                                </div>
+                                <div class="mt-2">
+                                   <input type="text" name="pincode" class="form-control" placeholder="Enter your delivery pincode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="padding-top: 20px;">
+                    <h4><strong>Payment Mode</strong></h4>
+                    <div class="cart">
+                        <div class="cart-body">
+                            <div class="cart-items">
+                                <div class="mt-2">
+                                    <input type="text" name="payment" value="{{payment}}" style="display:none;">
+                                   <strong>{{mode}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-half">
+                <div style="margin:20px">
+                    <p>Price Details</p>
+                </div>
+                <div>
+                    <div style="display:flex; justify-content: space-between; margin:20px">
+                        <div>
+                            <p>Total Product Price</p> 
+                        </div>
+                        <div>
+                            <p>₹.{{{totalPrice cart}}}.00</p>
+                        </div>
+                    </div>
+                    <div style="margin:20px">
+                        <hr>
+                    </div>
+                    <div style="display:flex; justify-content: space-between; margin:20px">
+                        <div>
+                            <p>Order Total</p> 
+                        </div>
+                        <div>
+                            <p>₹.{{{totalPrice cart}}}.00</p>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" name="totalPrice" value="{{{totalPrice cart}}}" style="display:none;">
+                <div style="margin:20px">
+                    <button type="submit" class="btn bg-cart-buy ">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form> 
+</div>
+    
+<script type="text/javascript">
+    $('#addressNew').on( "click", (e) => document.getElementById('addressForm').style.display = 'block')
+    $('.addressType').on( "click", (e) => document.getElementById('addressForm').style.display = 'none')
+</script>

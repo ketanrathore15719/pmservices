@@ -1,0 +1,126 @@
+<div id="product_details" class="">
+    <div class="col-md-8 mt-2 container-main">
+        <div class="left-half">
+            <div style="margin-bottom:50px">
+                <h4><strong>My Orders</strong></h4>
+
+                {{#if invoice}}
+                	{{#each invoice}}
+	                <div class="cart">
+	                    <div class="cart-body">
+	                        <div class="cart-items">
+	                            <div class="items-cart">
+	                                <div class="mt-2 flex">
+	                                    <p>
+	                                    	<span>Invoice ID:</span>
+	                                    	<strong>{{invoiceId}}</strong>
+	                                    </p>
+	                                    <p>
+	                                    	<span>Order Date: </span>
+	                                    	<strong>{{dateAndTime createdAt}}</strong>
+	                                    </p>
+	                                </div>
+
+	                                <div class="mt-2">
+	                                    <span>Price: </span><strong>₹.{{this.totalPrice}}.00</strong>
+	                                </div>
+	                                <div class="mt-2">
+	                                    <span>Payment: </span><strong>{{paymentMode}}</strong>
+	                                </div>
+	                                <div class="mt-2">
+	                                    <span>Payment status: </span><strong>{{#if isStatus}} paid {{else}} unpaid {{/if}}</strong>
+	                                </div>
+	                                <div class="mt-2">
+	                                    <span>Delivery Status: </span><strong>{{deliveryStatus}}</strong><strong> at {{dateAndTime updatedAt}}</strong>
+	                                </div>
+	                                <div class="mt-2">
+	                                    <span>Delivery: </span><strong>{{#if isDelivered}} delivered {{else}} processing {{/if}}</strong>
+	                                </div>
+	                                <br>
+	                                <p style="cursor:pointer;" id="" onclick="show('{{invoiceId}}')">Show details</p>
+	                                <div id="{{invoiceId}}1" style="display:none;">
+		                               	<h5>Item Details</h5>
+		                               	<div class="flex">
+		                               		<div style="width:30%">
+		                               			<hr>
+		                               			{{#each this.orderInfo}}
+		                               			<div style="height:100px">
+		                               				<div class="mt-2">
+		                               		 			<span>price: </span><strong>₹.{{this.price}}.00</strong>
+		                            				</div>
+		                            				<div class="mt-2">
+		                               		 			<span>Quantity: </span><strong>{{this.qty}}</strong>
+		                            				</div>
+		                               			</div>
+		                               			<hr>
+		                               			{{/each}}
+		                               		</div>
+		                               		<br>
+		                               		<div style="width:70%">
+	                               				<hr>
+			                               		{{#each this.productInfo}}
+		                               			<div style="height:100px">
+		                               				<div class="mt-2">
+						                                <img src="{{this.thumbnail.url}}" style="object-fit: cover; max-height: 100px;">
+						                                <a href="#" style="text-decoration: none; color:#333;"><strong>{{this.name}}</strong></a>
+						                            </div>
+		                               			</div>
+		                               			<hr>
+		                               			{{/each}}
+		                               		</div>
+		                               	</div>
+	                               	</div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+	                </div> 
+
+	                {{/each}}
+                {{/if}}
+            </div>
+            <!-- <div style="padding-top: 20px;">
+                <h4><strong>My Orders</strong></h4>
+                <div class="cart">
+                    <div class="cart-body">
+                        <div class="cart-items">
+                            <div class="mt-2">
+                                <img src="{{product_info.thumbnail.url}}" width="100">
+                            </div>
+                            <div class="items-cart">
+                                <div class="mt-2">
+                                    <span>Name: </span><strong>{{user.name}}</strong>
+                                </div>
+                                <div class="mt-2">
+                                    <span>Mobile: </span><strong>{{user.mobile}}</strong>
+                                </div>
+                                <div class="mt-2">
+                                    <span>Email: </span><strong>{{user.email}}</strong>
+                                </div>
+                            </div>
+                            <div>
+                            	<label class="inline-flex items-center mt-3">
+			                        <span style="display: flex; cursor: pointer;" id="userEdit" class="ml-2 text-gray-700 mb-4">
+			                        	<i class='bx bx-edit bx-sm' ></i></span>
+			                    </label>
+                                <a style="display:flex;" class="" data-href=""></a>
+                            </div>
+                        </div>
+                    </div>
+              	</div>
+        	</div> -->
+        </div>
+        <div class="right-half">
+            <div style="margin:20px">
+                <p>List Of Address</p>
+            </div>
+            <div>
+ 
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	const show = id => $(`#${id}1`).toggle();
+</script>

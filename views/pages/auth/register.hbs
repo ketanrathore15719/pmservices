@@ -1,0 +1,103 @@
+<section class="auth">
+    <div class="wrapper">
+        <div class="logo">
+            <img src="/images/logo.jpg" alt="logo">
+        </div>
+        <div class="text-center mt-4 name">
+           Register
+        </div>
+        <form id="register_form" class="p-3 mt-3" method="post" >
+            {{#if messages.error}}
+            <span class="error-msg">{{ messages.error }}</span>
+            {{/if}}
+            <div class="form-field d-flex align-items-center">
+                <i class='bx bxs-user bx-sm'></i>
+                <input type="text" value="{{messages.name}}" name="name" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <i class='bx bxs-envelope bx-sm' ></i>
+                <input type="email" value="{{messages.email}}" name="email" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <i class='bx bxs-phone bx-sm' ></i>
+                <input type="phone" value="{{messages.mobile}}" name="mobile" id="mobile" placeholder="Enter your mobile number">
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <i class='bx bxs-key bx-sm'></i>
+                <input type="password" name="password" id="pwd" placeholder="Password">
+            </div>
+            <button class="btn mt-3">Register</button>
+        </form>
+        <div class="text-center fs-6">
+            Already have an account? <a class="auth-text" href="/auth/login">Login</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        //validate form
+        $('form#register_form').validate({
+            errorClass: "state-error",
+            validClass: "state-success",
+            rules: {
+                name: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                mobile: {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10
+                },
+                password: {
+                    required: true,
+                },
+            },
+            messages: {
+                name: {
+                    required: 'Required!',
+                },
+                email: {
+                    required: 'Required!',
+                },
+                email: {
+                    required: 'Required!',
+                    email: 'Not valid!'
+                },
+                mobile: {
+                    required: 'Required!',
+                    digits: 'Only digits!',
+                    minlength: 'minumim 10 digits!',
+                    maxlength: 'mixumim 10 digits!',
+                },
+                password: {
+                    required: 'Required!',
+                },
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).closest('.form-field').addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).closest('.form-field').removeClass(errorClass).addClass(validClass);
+            },
+            errorPlacement: function (error, element) {
+                if ($(element).attr('type') == 'checkbox') {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+    });
+
+    $('#brandName').on('input', async function(e){
+        let body = {name:this.value}
+        $.post( '/brand/verify',body, ( data ) => data.success ? $.notify("Brand name verified!", "success") :$.notify("Brand already exists!"), "json");
+    });
+    
+</script>

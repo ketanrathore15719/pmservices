@@ -1,0 +1,57 @@
+<div>
+	<div class="flex">
+		<h3>Create Brand</h3>
+		<a href="/brand" class="btn btn-primary btn-lg" role="button" aria-pressed="true">View brand</a>
+	</div>
+	<form id="brand_form" method="post">
+		<div class="mb-3 form-group">
+  			<label for="exampleFormControlInput1" class="form-label">Name</label>
+  			<input type="text" id="brandName" class="form-control" name="name">
+		</div>
+		<div class="mb-3">
+		  	<label for="exampleFormControlTextarea1" class="form-label">Description</label>
+		  	<textarea class="form-control"  name="description" rows="3"></textarea>
+		</div>
+		<div class="form-group" style="padding-top: 10px;">
+			<button class="btn btn-primary form-control" type="submit">Submit</button>
+		</div>
+	</form>
+</div>
+<script>
+	$(document).ready(function () {
+		//validate form
+		$('form#brand_form').validate({
+			errorClass: "state-error",
+			validClass: "state-success",
+			rules: {
+				name: {
+					required: true,
+				},
+			},
+			messages: {
+				name: {
+					required: 'Please enter brand name!',
+				},
+			},
+			highlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').addClass(errorClass).removeClass(validClass);
+			},
+			unhighlight: function (element, errorClass, validClass) {
+				$(element).closest('.form-group').removeClass(errorClass).addClass(validClass);
+			},
+			errorPlacement: function (error, element) {
+				if ($(element).attr('type') == 'checkbox') {
+					error.insertAfter(element.parent());
+				} else {
+					error.insertAfter(element);
+				}
+			}
+		});
+	});
+
+	$('#brandName').on('input', async function(e){
+    	let body = {name:this.value}
+    	$.post( '/brand/verify',body, ( data ) => data.success ? $.notify("Brand name verified!", "success") :$.notify("Brand already exists!"), "json");
+	});
+	
+</script>

@@ -1,0 +1,225 @@
+<div>
+	<div class="flex">
+		<h3>List of product</h3>
+		<a href="/product/create" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Add Product</a>
+	</div>
+	<form id="product_form" method="get" style="padding-top: 20px;">
+		<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                   	<!-- <div class="col-md-3">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						            <input type="text" name="search" class="form-control" value="{{search}}"
+                        			placeholder="Search by name">
+						        </div>
+						    </div>
+						</div>
+                    </div> -->
+                    <div class="col-md-3">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						           	<select class="form-control pt-2 pb-2" id="category_type" name="category_type">
+				                       	<option value="">Please select anyone category</option>
+				                       	<option value="">All category</option>
+						                {{#each category}}
+						                <option value="{{_id}}" {{#compare ../category_type '=='  _id}}selected{{/compare}}>
+						                    {{name}}</option>
+						                {{/each}}
+				                    </select>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="col-md-3">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						           	<select class="form-control pt-2 pb-2" id="brand_type" name="brand_type">
+				                       	<option value="">Please select anyone brand</option>
+				                       	<option value="">All brand</option>
+						                {{#each brand}}
+						                <option value="{{_id}}" {{#compare ../brand_type '=='  _id}}selected{{/compare}}>
+						                    {{name}}</option>
+						                {{/each}}
+				                    </select>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <div class="col-md-3">
+						<div class="row">
+							<div class="col-xl-12 col-md-12 col-sm-12">
+								<div class="form-group">
+						           	 <button type="submit" class="btn btn-info "><i
+                            				class="fa fa-search" data-toggle="tooltip" data-placement="top" title=""
+                            				data-original-title="Search"></i> Search</button>
+                            		<a href="/product" class="btn btn-info btn-block"
+                        				data-toggle="tooltip" data-placement="top" title=""
+                        				data-original-title="Clear">Clear</a>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+		        </div>
+		    </div>
+		</div>
+	</form>
+	
+	<div style="padding-top: 20px;" class="productList">
+		<table class="table" style="width:100%">
+		  	<thead>
+		    	<tr>
+		    		<th style="width:20%">Thumbnail</th>
+		     	 	<th style="width:30%"scope="col">Name</th>
+		     	 	<th scope="col">Category</th>
+		      		<th scope="col">Status</th>
+		     	 	<th scope="col">Action</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody>
+		  		{{#if product}}
+		  			{{#each product}}
+			  			<tr>
+			  				<td><img alt="{{name}}" id="myImg" onclick="imgpop('{{name}}', '{{thumbnail.url}}')" src="{{thumbnail.url}}" width="150" height="150" style="object-fit: cover;"></td>
+			      			<td>{{name}}</td>
+			      			<td>{{category_info.name}}</td>
+			      			<td>
+			      				<label class="switch">
+                        			<input {{#if status}}checked{{/if}} type="checkbox" name="{{status}}" id="{{_id}}">
+                        			<span class="slider round"></span>
+                      			</label>
+                      		</td>
+			      			<td>{{{checkDestroy isDeleted _id}}} &nbsp; 
+			      				<a href="/product/update/{{_id}}"><i class='bx bxs-edit bx-sm' ></i></a>&nbsp; 
+			      				<i style="cursor: pointer;" onclick="productDetail('{{_id}}')" class='bx bxs-show bx-sm' ></i>
+			      			</td>
+			    		</tr>
+			    	{{/each}}
+		  		{{/if}}
+		  		{{#if totalProduct}}
+		  			<tr>
+		  				<td></td>
+		  			</tr>
+		  			<tr>
+		  				<td>No Records found</td>
+		  			</tr>
+		  		{{/if}}
+		  	</tbody>
+		</table>
+		<div class="flex">
+			{{#if product}}
+            	<span class="text-left text-muted mt-2">Display {{start_record}} to {{end_record}}
+                records out of
+                {{total_records}}</span>
+        	{{/if}}
+			{{#if pagination.totalPage}}
+				<center>
+	        		{{pagination pagination}}
+				</center>
+    		{{/if}}
+		</div>
+		
+    	
+	</div>
+	
+</div>
+{{> modal/image}}
+{{> modal/product_details}}
+<script type="text/javascript">
+	const destroy = async (productId, status) => {
+		console.log(status)
+        const result = await confirm(status === 'false' ? "Are you sure you want to remove it!" : "Are you sure you want to restore it!");
+        if(result) $.post('/product/delete',{productId}, () => window.location.href = '/product');
+    }
+
+    const status = async (productId, status) => {
+		console.log(status)
+        const result = await confirm(status === 'false' ? "Are you sure you want to active it!" : "Are you sure you want to deactive it!");
+        if(result) $.post('/product/status',{productId}, () => window.location.href = '/product');
+    }
+
+    const update = async (productId) => {
+		console.log(productId)
+    }
+
+
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip();   
+	});
+
+	// $('#switchstatus input[type=checkbox]').change(function() {
+
+	$('input[type="checkbox"]').change(function () {
+	    let productId = this.id;
+	  	let status = this.name;
+	  	//const result = confirm(status === 'false' ? "Are you sure you want to active it!" : "Are you sure you want to deactive it!");
+	    $.post('/product/status',{productId}, () => window.location.href = '/product');
+	});
+
+	$('#category_type').change(function () { 
+		window.location.href = `/product?category_type=${this.value}`
+	});
+
+	$("#brand_type").change(function () { 
+		window.location.href = `/product?brand_type=${this.value}`
+	});
+
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the image and insert it inside the modal - use its "alt" text as a caption
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+
+	const imgpop = (name, url) => {
+		modal.style.display = "block";
+	  	modalImg.src = url;
+	  	captionText.innerHTML = name;
+	}
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() { 
+	  modal.style.display = "none";
+	}
+
+	const productDetail = (id) => {
+		// $("#name").html('');
+  //       $("#price").html('');
+  //       $("#description").html('')
+  //       var modalImg = document.getElementById("detailImg");
+  //       modalImg.src = '/images/prev.jpg';
+  //       $("#categoryInfo").html('')
+  //       $("#status").html('');
+  //       $("#deletedproduct").html('');
+  //       $("#createdat").html('')
+
+		
+        let url = '/product/view/' + id;
+        $.get(url, {}, function (data) {
+
+            if (data.success == true) {
+            	document.getElementById('product_details').style.display='block'
+            	$("#brandinfo").html(data.product.brand_info.name);
+                $("#categoryInfo").html(data.product.category_info.name)
+                $("#name").html(data.product.name);
+                $("#price").html(data.product.price);
+                $("#description").html(data.product.description)
+                var modalImg = document.getElementById("detailImg");
+                modalImg.src = data.product.thumbnail.url;
+                $("#status").html(data.product.status ? 'Active' : 'Deactive');
+                $("#deletedproduct").html(data.product.isDeleted ? 'true' : 'false');
+                $("#createdat").html(moment().format('DD-MM-YYYY hh:mm:ss a'))
+
+            }
+        });
+        console.log()
+	}
+
+
+	
+</script>

@@ -1,0 +1,69 @@
+<div id="orderdetails" class="modal">
+    <div class="modal-content">
+        <div class="modal-header flex">
+            <h5 class="modal-title">Order Details</h5>
+            <p id="orderdetails" onclick="document.getElementById('orderdetails').style.display='none'" style="cursor:pointer; font-size: 25px" class="button display-topright">&times;</p>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <center>
+                        <img id="detailImg" style="height: 80%;width: 80%; object-fit: cover;" id="image_preview"
+                        src="/images/prev.jpg">
+                        </center>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Brand : {{invoice.name}}</label>
+                        <strong id="brandinfo">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Category :</label>
+                        <strong id="categoryInfo">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Name :</label>
+                        <strong id="name">Not Found</strong>
+                    </div>
+                </div>
+                 <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Price :</label>
+                        <strong id="price">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Description :</label>
+                        <strong id="description">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Status :</label>
+                        <strong id="status">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Deleted :</label>
+                        <strong id="deletedproduct">Not Found</strong>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Created At :</label>
+                        <strong id="createdat">Not Found</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer flex"></div>
+    </div>
+</div>

@@ -1,0 +1,169 @@
+<div id="product_details" class="">
+     {{#if cart}}
+    <div class="col-md-8 mt-2 container-main">
+        <div class="left-half">
+                <div class="left-cart" id="style-4">
+                {{> common/cart}}
+                </div>
+        </div>
+        <div class="right-half">
+            <div style="margin:20px">
+                <p>Price Details</p>
+            </div>
+            <div>
+                <div style="display:flex; justify-content: space-between; margin:20px">
+                    <div>
+                        <p>Total Product Price</p> 
+                    </div>
+                    <div>
+                        <p>₹.{{{totalPrice cart}}}.00</p>
+                    </div>
+                </div>
+                <div style="margin:20px">
+                    <hr>
+                </div>
+                <div style="display:flex; justify-content: space-between; margin:20px">
+                    <div>
+                        <p>Order Total</p> 
+                    </div>
+                    <div>
+                        <p>₹.{{{totalPrice cart}}}.00</p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin:20px">
+                <form action="/cart/order/summary" id="paymentMethod" method="POST">
+                    <div class="flex flex-col mb-4 form-group">
+                        <label class="inline-flex items-center mt-3">
+                            <span class="ml-2 text-gray-700 mb-4">Cash on delivery</span>
+                            <input type="radio" id="paymentCOD" name="payment" value="cod" class=" form-radio h-5 w-5 text-gray-600 mb-4">
+                        </label>
+                        <label class="inline-flex items-center mt-3">
+                            <span class="ml-2 text-gray-700 mb-4">Pay with online</span>
+                            <input type="radio" id="paymentCARD" name="payment" value="card" class="form-radio h-5 w-5 text-gray-600 mb-4">
+                        </label>
+                    </div>
+                    <div>
+                        <input type="text" name="payment1" value="cashcard" style="display:none">
+                    </div>
+                    <button type="submit" class="btn bg-cart-buy ">
+                    Continue
+                </button>
+                </form>
+                
+            </div>
+        </div>
+    </div> 
+    {{else}}
+        <center>
+            <h3>Empty Cart!</h3>
+        </center>
+    {{/if}}
+</div>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+        //validate form
+        $('form#paymentMethod').validate({
+            errorClass: "state-error",
+            validClass: "state-success",
+            rules: {
+                payment: {
+                    required: true,
+                },
+            },
+            messages: {
+                payment: {
+                    required: 'Please select anyone payment method',
+                },
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).closest('.form-group').addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).closest('.form-group').removeClass(errorClass).addClass(validClass);
+            },
+            errorPlacement: function (error, element) {
+                if ($(element).attr('type') == 'checkbox') {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+      /*  function incrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            let cartId = $(e.target).data('value')
+            let price = $(e.target).data('price')
+
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal)) {
+                parent.find('input[name=' + fieldName + ']').val(currentVal + 1);
+                $.ajax({
+                    url: '/cart/update',
+                    dataType: "html",
+                    method:'POST',
+                    data:{cartId, price, qty:currentVal + 1 },
+                    success: function (response) {
+                        $(".bodyDiv").html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr["error"](error, "error", {
+                            "closeButton": true,
+                            "progressBar": true
+                        });
+                    }
+                });
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        function decrementValue(e) {
+            e.preventDefault();
+            var fieldName = $(e.target).data('field');
+            let cartId = $(e.target).data('value')
+            let price = $(e.target).data('price')
+
+            var parent = $(e.target).closest('div');
+            var currentVal = parseInt(parent.find('input[name=' + fieldName + ']').val(), 10);
+
+            if (!isNaN(currentVal) && currentVal > 0) {
+                console.log(currentVal)
+                parent.find('input[name=' + fieldName + ']').val(currentVal == 1 ? currentVal : currentVal - 1);
+
+                $.ajax({
+                    url: '/cart/update',
+                    dataType: "html",
+                    method:'POST',
+                    data:{cartId, price, qty:currentVal == 1 ? currentVal : currentVal - 1},
+                    success: function (response) {
+                        $(".bodyDiv").html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr["error"](error, "error", {
+                            "closeButton": true,
+                            "progressBar": true
+                        });
+                    }
+                });
+
+            } else {
+                parent.find('input[name=' + fieldName + ']').val(0);
+            }
+        }
+
+        $('.input-group').on('click', '.button-plus', function(e) {
+            incrementValue(e);
+        });
+
+        $('.input-group').on('click', '.button-minus', function(e) {
+            decrementValue(e);
+        });*/
+    });
+
+</script>

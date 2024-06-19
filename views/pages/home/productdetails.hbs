@@ -1,0 +1,53 @@
+<div id="product_details" class="">
+    <div class="modal-content">
+        <div class="modal-header flex">
+            <h5 class="modal-title">Product Details</h5>
+        </div>
+        <br>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <center>
+                        <img id="detailImg" style="height: 80%;width: 80%; object-fit: cover;" id="image_preview"
+                        src="{{product.thumbnail.url}}">
+                        </center>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Brand :</label>
+                        <strong id="brandinfo">{{product.brand_info.name}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Category :</label>
+                        <strong id="categoryInfo">{{product.category_info.name}}</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Name :</label>
+                        <strong id="name">{{product.name}}</strong>
+                    </div>
+                </div>
+                 <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Price :</label>
+                        <strong id="price">₹.{{product.price}}.00</strong>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label">Description :</label>
+                        <strong id="description">{{product.description}}</strong>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="modal-footer flex">
+        	<button type="button" class="btn bg-cart mt-3"><i class="fa fa-cart-plus mr-2"></i> Add to cart</button>
+        </div>
+    </div>
+</div>

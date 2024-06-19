@@ -1,0 +1,66 @@
+<div>
+	<div class="flex">
+		<h3>List of category</h3>
+		<a href="/category/create" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Add Category</a>
+	</div>
+	<div style="padding-top: 20px;">
+		<table class="table" style="width:100%">
+		  	<thead>
+		    	<tr>
+		     	 	<th scope="col" style="width:30%">Name</th>
+		     	 	<th scope="col" style="width:20%">No. of Product</th>
+		      		<th scope="col">Status</th>
+		     	 	<th scope="col">Action</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody>
+		  		{{#if category}}
+		  			{{#each category}}
+			  			<tr>
+			      			<td>{{name}}</td>
+			      			<td>{{{productCheck productCount}}}</td>
+			      			<td><label class="switch">
+                                                <input {{#if status}}checked{{/if}} type="checkbox" name="{{status}}" id="{{_id}}">
+                                                <span class="slider round"></span>
+                                              </label></td>
+			      			<td>{{{checkDestroy isDeleted _id}}} &nbsp; <a href="/category/update/{{_id}}"><i class='bx bxs-edit bx-sm' ></i></a></td>
+			    		</tr>
+			    	{{/each}}
+		  		{{/if}}
+		  	</tbody>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+	const destroy = async (categoryId, status) => {
+		console.log(status)
+        const result = await confirm(status === 'false' ? "Are you sure you want to remove it!" : "Are you sure you want to restore it!");
+        if(result) $.post('/category/delete',{categoryId}, () => window.location.href = '/category');
+    }
+
+    const status = async (categoryId, status) => {
+		console.log(status)
+        const result = await confirm(status === 'false' ? "Are you sure you want to active it!" : "Are you sure you want to deactive it!");
+        if(result) $.post('/category/status',{categoryId}, () => window.location.href = '/category');
+    }
+
+    const update = async (categoryId) => {
+		console.log(categoryId)
+    }
+
+</script>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+
+// $('#switchstatus input[type=checkbox]').change(function() {
+
+$('input[type="checkbox"]').change(function () {
+    let categoryId = this.id;
+  	let status = this.name;
+  	//const result = confirm(status === 'false' ? "Are you sure you want to active it!" : "Are you sure you want to deactive it!");
+    $.post('/category/status',{categoryId}, () => window.location.href = '/category');
+});
+</script>

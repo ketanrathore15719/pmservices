@@ -1,0 +1,59 @@
+<div>
+	
+
+	{{#if user }}
+		{{#compare user.role '=='  1}}
+			<ul id="myDIV" class="nav-list">
+				<li id="routes"></li>
+			  	<li style="float:right">
+			  		{{#if user}}
+			  			<a  class="nav1" href="/auth/logout"> <i class='bx bx-log-out bx-sm'></i></a>
+			  		{{else}}
+			  			<a  class="nav1" href="/auth/login"><i class='bx bx-log-in bx-sm' ></i></a>
+			  		{{/if}}
+			  	</li>
+			</ul>
+		{{/compare}}
+		
+		{{#compare user.role '=='  2}}
+			<ul id="myDIV" class="nav-list">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				{{#each category}} 
+					<li>
+						<a href="/product/{{#tolowercase name}}{{/tolowercase}}/{{_id}}">{{name}}</a>
+					</li>
+				{{/each}}
+			  	<li style="float:right">
+			  		{{#if user}}
+			  			<a  class="nav1" href="/auth/logout"> <i class='bx bx-log-out bx-sm'></i></a>
+			  		{{else}}
+			  			<a  class="nav1" href="/auth/login"><i class='bx bx-log-in bx-sm' ></i></a>
+			  		{{/if}}
+			  	</li>
+			</ul>
+		{{/compare}}
+
+	{{else}}
+		<ul class="nav-list">
+			<li>
+				<a href="/">Home</a>
+			</li>
+			{{#each category}} 
+				<li>
+					<a href="/product/{{#tolowercase name}}{{/tolowercase}}/{{_id}}">{{name}}</a>
+				</li>
+			{{/each}}
+		  	<li style="float:right">
+		  		{{#if user}}
+		  			<a  class="nav1" href="/auth/logout"> <i class='bx bx-log-out bx-sm'></i></a>
+		  		{{else}}
+		  			<a  class="nav1" href="/auth/login"><i class='bx bx-log-in bx-sm' ></i></a>
+		  		{{/if}}
+		  	</li>
+		</ul>
+	{{/if}}
+	
+	
+</div>
